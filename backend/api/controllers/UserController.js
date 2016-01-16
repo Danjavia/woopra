@@ -7,29 +7,44 @@
 
 module.exports = {
 	login: function ( req, res ) {
-		res.json({
-			logged: true
-		})
+
+		var username = req.param( "username" );
+        var password = req.param( "password" );
+
+        User.findByUsername(username).exec(function(err, usr) {
+	        if (err) {
+	            res.send(500, { error: "DB Error" });
+	        } else {
+	            if (usr) {
+	                if ( password == usr.password ) {
+	                    req.session.user = usr;
+	                    res.send(usr);
+	                } else {
+	                    res.send(400, { error: "Wrong Password" });
+	                }
+	            } else {
+	                res.send(404, { error: "User not Found" });
+	            }
+	        }
+	    });
+
+		// res.json({
+		// 	logged: true
+		// })
 	},
 
 	register: function ( req, res ) {
 
 		var username = req.param( "username" );
         var password = req.param( "password" );
-        console.log( req.params.all() );
 
-        console.log( username, password, req.body, req.param('username'), req.params ); return;
-
-        User.findByUsername(username).done(function(err, usr){
+        User.findByUsername(username).exec(function(err, usr){
             if (err) {
                 res.send(500, { error: "DB Error" });
-            } else if (usr) {
+            } else if (usr.length > 0) {
                 res.send(400, {error: "Username already Taken"});
             } else {
-                var hasher = require("password-hash");
-                password = hasher.generate(password);
-                
-                Users.create({username: username, password: password}).done(function(error, user) {
+                User.create({username: username, password: password}).exec(function(error, user) {
 	                if (error) {
 	                    res.send(500, {error: "DB Error"});
 	                } else {
@@ -40,16 +55,9 @@ module.exports = {
 	        };
     	});
 
-		// User.findOrCreate({ name: name }, { name: name })
-		// 	.then( function( tag ){
-		// 		tag.users.add( self.id );
-		// 		tag.save( sails.log.info );
-
-		// 	});
-
-		res.json({
-			response: 'Enhorabuena, ya haces parte de nuestro team'
-		})
+		// res.json({
+		// 	response: 'Enhorabuena, ya haces parte de nuestro team'
+		// })
 	}
 };
 
