@@ -12,7 +12,11 @@ module.exports = {
   		type: 'string',
   		required: true
   	},
-  	password: {
+    password: {
+      type: 'string',
+      required: true
+    },
+  	avatar: {
   		type: 'string',
   		required: true
   	}
