@@ -11,22 +11,20 @@ module.exports = {
 		var userId = req.param( "userId" );
         var productId = req.param( "productId" );
 
-        User.findOneByUsername( username ).exec( function( err, usr ) {
-	        if ( err ) {
-	            res.json({ code: 500, error: "DB Error" });
-	        } else {
-	            if ( usr ) {
-	                if ( password == usr.password ) {
-	                    req.session.user = usr;
-	                    res.json( usr );
-	                } else {
-	                    res.json({ code: 400, error: "Wrong Password" });
-	                }
-	            } else {
-	                res.json({ code: 404, error: "User not Found" });
-	            }
-	        }
-	    });
+        User.findOne( userId ).exec( function( err, user ) {
+		  	if ( err ) // handle error
+				res.json({ code: 500, error: 'Something went wrong.' });
+
+		  	// Queue up a record to be inserted into the join table
+		  	user.products.add( productId );
+	
+		  	// Save the user, creating the new associations in the join table
+		  	user.save( function( err ) {
+		  		// res.json({ code: 500, error: 'Something went wrong.' });
+		  	});
+
+		  	res.json({ data: 'Congratulations, the products has been saved in your library.' });
+		});
 	}
 };
 

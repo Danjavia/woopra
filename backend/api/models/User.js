@@ -7,7 +7,7 @@
 
 module.exports = {
 
-  identity: 'user',
+  identity: 'User',
   connection: 'someMongodbServer',
 
   attributes: {

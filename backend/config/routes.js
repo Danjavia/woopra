@@ -47,5 +47,6 @@ module.exports.routes = {
   ***************************************************************************/
   'post /login': 'UserController.login',
   'post /register': 'UserController.register',
+  'post /attach': 'ProductsController.attach'
 
 };

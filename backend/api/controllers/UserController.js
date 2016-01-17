@@ -11,7 +11,7 @@ module.exports = {
 		var username = req.param( "username" );
         var password = req.param( "password" );
 
-        User.findOneByUsername( username ).exec( function( err, usr ) {
+        User.findOneByUsername( username ).populate( 'products' ).exec( function( err, usr ) {
 	        if ( err ) {
 	            res.json({ code: 500, error: "DB Error" });
 	        } else {
