@@ -7,6 +7,9 @@
 
 module.exports = {
 
+  identity: 'user',
+  connection: 'someMongodbServer',
+
   attributes: {
   	username: {
   		type: 'string',
@@ -19,7 +22,13 @@ module.exports = {
   	avatar: {
   		type: 'string',
   		required: true
-  	}
+  	},
+
+    products: {
+      collection: 'products',
+      via: 'owners',
+      dominant: true
+    }
   }
 };
 

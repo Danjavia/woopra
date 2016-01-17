@@ -7,8 +7,32 @@
 
 module.exports = {
 
+  identity: 'products',
+  connection: 'someMongodbServer',
+
   attributes: {
 
+  	name: {
+  		type: 'string',
+  		required: true
+  	},
+
+  	description: {
+  		type: 'string'
+  	},
+
+  	price: {
+  		type: 'string'
+  	},
+
+  	image: {
+  		type: 'string'
+  	},
+
+  	owners: {
+      collection: 'user',
+      via: 'products'
+    }
   }
 };
 
