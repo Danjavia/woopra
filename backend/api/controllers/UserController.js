@@ -33,14 +33,15 @@ module.exports = {
 
 		var username = req.param( "username" );
         var password = req.param( "password" );
+        var avatar = req.param( "avatar" );
 
         User.findByUsername( username ).exec( function( err, usr ) {
             if ( err ) {
-                res.json({ error: "DB Error" });
+                res.json({ error: "Something went wrong" });
             } else if ( usr.length > 0 ) {
                 res.json({ code: 400, error: "Username already Taken" });
             } else {
-                User.create({ username: username, password: password }).exec( function( error, user ) {
+                User.create({ username: username, password: password, avatar: avatar }).exec( function( error, user ) {
 	                if ( error ) {
 	                    res.json({ code: 500, error: "DB Error" });
 	                } else {
