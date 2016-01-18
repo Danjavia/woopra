@@ -48,6 +48,7 @@ module.exports = {
 
             		// User variables from billing info
             		var name = req.param( "name" )
+            		var email = req.param( "email" )
             		var	ccn = req.param( "ccn" )
             		var	ccv = req.param( "ccv" )
             		var	ccd = req.param( "ccd" )
@@ -55,6 +56,7 @@ module.exports = {
             		// object from billingInfo form
             		var	billing_info = {
             				name: name,
+            				email: email,
             				ccn: ccn,
             				ccv: ccv,
             				ccd: ccd
